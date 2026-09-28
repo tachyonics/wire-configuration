@@ -37,8 +37,11 @@ jobs:
       - uses: swift-wire/setup-swift@v1
         with:
           swift-version: ${{ matrix.swift-version }}
+      # Optimised, as the macOS job and swift-wire build: a debug build compiles with testing enabled, which
+      # exports every internal symbol, so a cross-module reference to one links there and fails only in an
+      # optimised build (swift-wire/wire-mvc#251). The tests below build separately, in debug.
       - name: Build
-        run: swift build
+        run: swift build -c release -Xswiftc -strict-concurrency=complete
       - name: Test
         run: swift test
 
