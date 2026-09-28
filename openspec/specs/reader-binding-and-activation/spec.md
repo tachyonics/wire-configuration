@@ -39,8 +39,8 @@ writing `reader: nil` explicitly does not resolve by type, which is tracked as a
 https://github.com/swift-wire/swift-wire/issues/442.
 
 #### Scenario: both spellings at one parameter site
-- **WHEN** one function declares one parameter with `reader:` omitted and another with `reader: Keys.overrides`
-- **THEN** both type-check against the same initialiser and the function runs with the values the compiler passed
+- **WHEN** one function declares two `Int` parameters annotated `@ConfigProperty(forKey: "port", default: 8080)`, one with `reader:` omitted and the other with `reader: Keys.overrides`, and is called with a different value for each
+- **THEN** both annotations type-check against the same initialiser and each parameter carries the value passed for it
 
 #### Scenario: two sites with one key and two readers
 - **WHEN** two sites read `forKey: "couchdb.port"`, one from the type-resolved reader and one from `Keys.overrides`
